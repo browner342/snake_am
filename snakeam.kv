@@ -1,0 +1,146 @@
+#:kivy 1.0.9
+
+<ScreenManagement>:
+    Menu:
+        id:page1
+    TableScoore:
+        
+    NewGame:
+
+    AddScore:
+
+<Menu>:
+    name:'menu'
+
+    BoxLayout:
+        orientation:'vertical'
+        padding: 50
+        spacing: 20
+        Label:
+            text: 'Yooooo mate\nSnake am'
+            font_size: 45
+            halign: 'center'
+        
+        Button:
+            text: 'New Game'
+            font_size: 45
+            on_press: root.manager.current = 'new_game'
+        Button:
+            text: 'Table Score'
+            font_size: 45
+            on_press: root.manager.current = 'table_score'
+        Button:
+            text: 'Exit'
+            font_size: 45
+            on_press: app.stop()
+
+<TableScoore>:
+    name: 'table_score'
+    on_enter: root.read()
+    
+    AnchorLayout:
+        anchor_y: 'top'
+        
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 50
+            Label:
+                size_hint: 1, .9
+                font_size: 35
+                spacing: 20
+                text:root.table
+            Button:
+                size_hint: 1, .1
+                text: 'Menu'
+                font_size: 45
+                on_press: root.manager.current = 'menu'
+            
+    
+    
+            
+<Score>:
+    Label:
+        font_size: 70  
+        center_x: root.width / 4
+        top: root.top - 50
+        text: str(root.points)
+
+<AddScore>:
+    name: 'addscore'
+    textinput: input
+    score:score
+    on_enter: root.poi()
+    Score:
+        id: score
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 0.5, 0.2
+        pos: root.center_x - (1/2)*self.width, root.center_y - (1/2)*self.height
+        TextInput:
+            id: input
+            font_size: 24
+            multiline: False
+            
+        BoxLayout:
+            orientation: 'horizontal' 
+            Button:
+                text: 'Add score'
+                on_press: root.new_score()
+            Button:
+                text: "Cancel"
+                on_press: root.manager.current = 'menu'
+
+<Fruit>:
+    size: 50, 50
+    canvas:
+        Color:
+            rgb: (10, 0, 0)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Snake>:
+    size: 50, 50
+    canvas:
+        Color:
+            rgb: (0, 249 , 0)
+        Rectangle:
+            pos:self.pos
+            size:self.size
+
+<Board>:
+<NewGame>:
+    name: 'new_game'
+    snake: snake
+    fruit: fruit
+    on_enter: root.game()
+    score:score
+    Score:
+        id: score
+    
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'bottom'
+        Board:
+            size_hint:1, 1
+            Snake:
+                id: snake
+                center: self.width / 2, self.height / 2
+                size: root.width * 1/20, root.height * 1/20
+
+            Fruit:
+                id: fruit
+                pos: self.pos
+                size: root.width * 1/20, root.height * 1/20
+            Label:
+                font_size: 25  
+                center_x: root.width / (7/8)
+                top: root.top - 50
+                text: str(root.delta_time)
+    
+    
+    
+        
+
+            
+            
