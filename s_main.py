@@ -29,14 +29,32 @@ class TableScoore(Screen):
     table = StringProperty()
     
     def read(self):
+        '''
+        Reading scores from txt file
+        
+        input file.txt
+        output string(self.table)
+        '''
+        #renew data
+        self.score_list.clear()
+        self.table = ""
+
+        #new data read from file
         score_file = open('score.txt','r')
         self.score_list = score_file.readlines()
         self.score_list.sort()
         
-        for item in self.score_list[7::-1]:
+        
+        for item in self.score_list[::-1]:
             self.table += item
         
+        score_file.close()
+
 class AddScore(Screen):
+    '''
+    box nick input
+    adding score to file
+    '''
     textinput = ObjectProperty(None)
     score = ObjectProperty(None)
     def poi(self):
@@ -46,8 +64,10 @@ class AddScore(Screen):
     def new_score(self):
         global lll
         score_file = open('score.txt','a')
+        if lll < 10:
+            score_file.write('0')
         score_file.write(str(lll))
-        score_file.write('-')
+        score_file.write(' - ')
         score_file.write(self.textinput.text)
         score_file.write('\n')
         score_file.close()
@@ -96,16 +116,16 @@ class Snake(Widget):
         self._keyboard = None
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers): 
-        if keycode[1] == 'left' :
+        if keycode[1] == 'left' or keycode[1] == 'a':
             self.velocity_x = -1
             self.velocity_y = 0
-        if keycode[1] == 'right':
+        if keycode[1] == 'right' or keycode[1] == 'd':
             self.velocity_x = 1
             self.velocity_y = 0
-        if keycode[1] == 'up':
+        if keycode[1] == 'up' or keycode[1] == 'w':
             self.velocity_x = 0
             self.velocity_y = 1
-        if keycode[1] == 'down':
+        if keycode[1] == 'down' or keycode[1] == 's':
             self.velocity_x = 0
             self.velocity_y = -1
             
@@ -117,7 +137,7 @@ class Snake(Widget):
 class Board(Widget):
     pass
 
-class NewGame(Screen):
+class ClassicGame(Screen):
     fruit = ObjectProperty(None)
     snake = ObjectProperty(None)
     event = ObjectProperty(None)
@@ -162,7 +182,7 @@ class NewGame(Screen):
         self.score.points = 0
         self.snake.config_keyboard()
         self.fruit.throw_fruit()
-        self.event = Clock.schedule_interval(self.on_board, 1.0/60.0)
+        self.event = Clock.schedule_interval(self.on_board, 1.0/50.0)
         self.time_start = time.time()
        
 

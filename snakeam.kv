@@ -5,33 +5,35 @@
         id:page1
     TableScoore:
         
-    NewGame:
+    ClassicGame:
 
     AddScore:
 
 <Menu>:
     name:'menu'
-
     BoxLayout:
         orientation:'vertical'
         padding: 50
         spacing: 20
         Label:
             text: 'Yooooo mate\nSnake am'
-            font_size: 45
+            font_size: 35
             halign: 'center'
         
         Button:
-            text: 'New Game'
-            font_size: 45
-            on_press: root.manager.current = 'new_game'
+            text: 'Classic Game'
+            font_size: 35
+            on_press: root.manager.current = 'classic_game'
+        Button:
+            text: 'Arcade Game'
+            font_size: 35
         Button:
             text: 'Table Score'
-            font_size: 45
+            font_size: 35
             on_press: root.manager.current = 'table_score'
         Button:
             text: 'Exit'
-            font_size: 45
+            font_size: 35
             on_press: app.stop()
 
 <TableScoore>:
@@ -43,12 +45,14 @@
         
         BoxLayout:
             orientation: 'vertical'
-            padding: 50
-            Label:
-                size_hint: 1, .9
-                font_size: 35
-                spacing: 20
-                text:root.table
+            padding: 20
+            ScrollView:
+                size: self.size
+                Label:
+                    size_hint: 1, .9
+                    font_size: 35
+                    spacing: 20
+                    text:root.table
             Button:
                 size_hint: 1, .1
                 text: 'Menu'
@@ -109,8 +113,8 @@
             size:self.size
 
 <Board>:
-<NewGame>:
-    name: 'new_game'
+<ClassicGame>:
+    name: 'classic_game'
     snake: snake
     fruit: fruit
     on_enter: root.game()
@@ -137,10 +141,4 @@
                 center_x: root.width / (7/8)
                 top: root.top - 50
                 text: str(root.delta_time)
-    
-    
-    
-        
 
-            
-            
